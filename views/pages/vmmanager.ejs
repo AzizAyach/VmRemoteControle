@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include ../partials/head %>
+</head>
+<body class="container">
+
+<header>
+    <% include ../partials/header %>
+</header>
+
+<main>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3>
+                            VM FORM
+                        </h3>
+                    </div>
+                    <div class="col-md-6">
+                        <h3>
+                            LIST VM
+                        </h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <form role="form" action="/vmcreate" method="POST" id="add_form">
+                            <div class="form-group">
+                                <label>
+                                    Name
+                                </label>
+                                <input type="text" class="form-control" id="name" name="name">
+                            </div>
+                            <div class="form-group">
+
+                                <label>
+                                    IP
+                                </label>
+                                <input type="text" class="form-control" id="ip" name="ip">
+                            </div>
+                            <div class="form-group">
+
+                                <label>
+                                    Username
+                                </label>
+                                <input type="text" class="form-control" id="username" name="username">
+                            </div>
+                                <label>
+                                    OS
+                                </label>
+                                <div class="checkbox-inline">
+                                        <input type="checkbox" id="osw" class="radio" value="Windows" name="os"> Windows
+                                </div>
+                                <div class="checkbox-inline">
+                                    <input type="checkbox" id="osl" class="radio" value="Linux" name="os"> Linux
+                                </div>
+
+                            <div class="form-group">
+                                <label>
+                                    HDD
+                                </label>
+                                <input type="number" class="form-control" id="hdd" name="hdd">
+                            </div>
+                            <div class="form-group">
+                                <label>
+                                    RAM
+                                </label>
+                                <input type="number" class="form-control" id="ram" name="ram">
+                            </div>
+                            <div class="form-group">
+                                <label>
+                                    CPU
+                                </label>
+                                <input type="number" class="form-control" id="cpu" name="cpu">
+                            </div>
+                            <button type="submit" class="btn btn-primary" id="btn_sub">
+                                Submit
+                            </button>
+                        </form>
+                    </div>
+                    <div class="col-md-8">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>
+                                    #
+                                </th>
+                                <th>
+                                    Name
+                                </th>
+                                <th>
+                                    IP
+                                </th>
+                                <th>
+                                    Username
+                                </th>
+                                <th>
+                                    HDD
+                                </th>
+                                <th>
+                                    RAM
+                                </th>
+                                <th>
+                                    CPU
+                                </th>
+                                <th>
+                                    OS
+                                </th>
+                                <th>
+                                    CREATE AT
+                                </th>
+                                <th>
+                                    UPDATE AT
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <% listvm.forEach(function(vm) { %>
+
+                            <tr class="active">
+                                <td>
+
+                                </td>
+                                <td>
+                                    <%= vm.name %>
+                                </td>
+                                <td>
+                                    <%= vm.ip %>
+                                </td>
+                                <td>
+                                    <%= vm.username %>
+                                </td>
+                                <td>
+                                    <%= vm.harddisk %>
+                                </td>
+                                <td>
+                                    <%= vm.Ram %>
+                                </td>
+                                <td>
+                                    <%= vm.cpu %>
+                                </td>
+                                <td>
+                                    <%= vm.os %>
+                                </td>
+                                <td>
+                                    <%= vm.created_at %>
+                                </td>
+                                <td>
+                                    <%= vm.updated_at %>
+                                </td>
+                                <td>
+                                    <button type="button" id="del_btn" class="btn btn-primary btn-default btn-round"><span class="glyphicon glyphicon-pencil"></span></button>
+                                </td>
+                                <td>
+                                    <button type="button" id="upd_btn" class="btn btn-danger btn-default btn-round"><span class="glyphicon glyphicon-trash"></span></button>
+                                </td>
+                            </tr>
+                            <% }); %>
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<footer>
+    <% include ../partials/footer %>
+</footer>
+
+</body>
+</html>
