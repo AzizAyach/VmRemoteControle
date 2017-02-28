@@ -82,7 +82,7 @@
                         </form>
                     </div>
                     <div class="col-md-8">
-                        <table class="table">
+                        <table class="table" id="vm_table">
                             <thead>
                             <tr>
                                 <th>
@@ -128,7 +128,7 @@
                                     <%= vm.name %>
                                 </td>
                                 <td>
-                                    <%= vm.ip %>
+                                    <%= vm.ipadresse %>
                                 </td>
                                 <td>
                                     <%= vm.username %>
@@ -152,10 +152,10 @@
                                     <%= vm.updated_at %>
                                 </td>
                                 <td>
-                                    <button type="button" id="del_btn" class="btn btn-primary btn-default btn-round"><span class="glyphicon glyphicon-pencil"></span></button>
+                                    <button type="button" id="btn_upd" name="<%=vm._id%>" class="btn btn-primary btn-default btn-round"><span class="glyphicon glyphicon-pencil"></span></button>
                                 </td>
                                 <td>
-                                    <button type="button" id="upd_btn" class="btn btn-danger btn-default btn-round"><span class="glyphicon glyphicon-trash"></span></button>
+                                    <button type="button" id="btn_del" name="<%=vm._id %>" class="btn btn-danger btn-default btn-round"><span class="glyphicon glyphicon-trash"></span></button>
                                 </td>
                             </tr>
                             <% }); %>

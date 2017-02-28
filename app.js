@@ -40,30 +40,50 @@ app.set('view engine', 'ejs');
 
        })
 
-app.get('/testdde', function (req,res) {
-
-
-
-})
-
+ app.get('/dash', api.home);
  app.post('/vmcreate', api.post);
+ app.delete('/vmdelete', api.delete);
  app.get('/thread/:title.:format?', api.show);
  app.get('/test', api.list);
 
+app.get('/home', function (req,res) {
 
-       app.get('/ssh', function(req, res) {
-           conn.on('ready', function(){
-               console.log("connected");
-           });
-           conn.on('error', function(){
-               console.log("fails");
-           });
-           conn.connect({
-               host:'192.168.254.128',
-               port: 22,
-               username:'oracle',
-               password:'98528576'
-           });
+    res.render('pages/home');
+
+})
+
+
+ exports.home = function(req, res) {
+     VM.find(function (err, vm) {
+         res.redirect('/test', api.list);
+     });
+ }
+
+       app.get('/ssh', function(req, res , next) {
+
+           var session =false;
+
+
+               conn.on('ready', function(){
+                   console.log("connect");
+               var op ={'msg':'connect','location':'/home'};
+                   res.writeHead(200, {"Content-Type": "application/json"});
+                   res.end(JSON.stringify(op));
+               });
+               conn.on('error', function(){
+                   console.log("fails");
+
+               });
+               conn.connect({
+                   host: req.query.ip ,
+                   port: 22,
+                   username: req.query.user,
+                   password: req.query.password
+               });
+
+
+
+
        });
 
         app.get('/host', function(req, res) {
@@ -81,23 +101,34 @@ app.get('/testdde', function (req,res) {
         });
 
 
-         app.get('/getip', function(req, res) {
+         app.get('/sql', function(req, res) {
 
-             conn.exec('sqlplus / as sysdba', function (err, stream) {
-                 if (err) throw err;
-                 stream.on('close', function () {
-                     console.log('Stream :: close');
-                 }).on('data', function (data) {
-                     console.log('STDOUT: ' + data);
-                 }).stderr.on('data', function (data) {
-                     console.log('STDERR: ' + data);
-                 });
+             conn.on('ready', function() {
+                 console.log('Connection :: ready');
+                 conn.shell( function(err, stream) {
+                     if (err) throw err;
+                     stream.on('close', function() {
+                         console.log('Stream :: close');
+                         conn.end();
+                     }).on('data', function(data) {
 
+                         stream.write('sqlplus / as sysdba');
+                         stream.write('DROP USER SOLIFE307GBE CASCADE;');
+
+
+                     });
+         });
              });
          });
 
-          app.get('/sql', function(req, res) {
-              conn.exec('java -version',function(err,stream){
+
+app.post('/import', function(req, res) {
+
+
+        var str = 'impdp '+req.body.username+'/'+req.body.password+'@'+req.body.database+' directory=DATAPUMP dumpfile='+req.body.dumpfile+'.EXP logfile= imp-'+req.body.dumpfile+' schemas='+req.body.schema+' remap_tablespace='+req.body.rmp+':'+req.body.rmps ;
+
+
+        conn.exec(str,function(err,stream){
                   if (err) throw err;
                   stream.on('close', function () {
                       console.log('Stream :: close');
@@ -107,7 +138,66 @@ app.get('/testdde', function (req,res) {
                       console.log('STDERR: ' + data);
                   });
           });
+
+
           });
+
+     app.post('/export', function(req, res) {
+
+
+       conn.exec('expdp '+req.body.username+'/'+req.body.password+'@'+req.body.database+' schemas='+req.body.schema+' directory=DATAPUMP dumpfile='+req.body.dumpfile+'.EXP logfile='+req.body.logfile,function(err,stream){
+        if (err) throw err;
+        stream.on('close', function () {
+            console.log('Stream :: close');
+            res.redirect('/home');
+        }).on('data', function (data) {
+            console.log('STDOUT: ' + data);
+        }).stderr.on('data', function (data) {
+            console.log('STDERR: ' + data);
+        });
+    });
+});
+
+app.post('/importtest', function(req, res) {
+
+    conn.exec('impdp IS601DEVX/IS601DEVX@orcl directory=DATAPUMP dumpfile=IS601DEVX.EXP logfile=imp-IS601DEVX.log schemas=IS601DEVX  remap_tablespace=USERS:BSBIS_DATA',function(err,stream){
+        if (err) throw err;
+        stream.on('close', function () {
+            console.log('Stream :: close');
+        }).on('data', function (data) {
+            console.log('STDOUT: ' + data);
+        }).stderr.on('data', function (data) {
+            console.log('STDERR: ' + data);
+        });
+    });
+});
+
+app.post('/exporttest', function(req, res) {
+    conn.exec('expdp IS601DEVX/IS601DEVX@orcl schemas=IS601DEVX directory=DATAPUMP dumpfile=firstexp.EXP logfile=expdp.log content=DATA_ONLY',function(err,stream){
+        if (err) throw err;
+        stream.on('close', function () {
+            console.log('Stream :: close');
+        }).on('data', function (data) {
+            console.log('STDOUT: ' + data);
+        }).stderr.on('data', function (data) {
+            console.log('STDERR: ' + data);
+        });
+    });
+});
+
+app.get('/install', function(req, res) {
+    conn.exec('cd /home/oracle/app/solife_install && java -jar com.bsb.solife.jboss-installer-6.1.4.jar auto_install_21.xml',
+        function(err,stream){
+        if (err) throw err;
+        stream.on('close', function () {
+            console.log('Stream :: close');
+        }).on('data', function (data) {
+            console.log('STDOUT: ' + data);
+        }).stderr.on('data', function (data) {
+            console.log('STDERR: ' + data);
+        });
+    });
+});
 
 
 

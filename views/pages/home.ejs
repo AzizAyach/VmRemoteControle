@@ -1,0 +1,191 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include ../partials/head %>
+</head>
+<body class="container">
+
+<header>
+    <% include ../partials/header %>
+</header>
+
+
+<main>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <span class="glyphicon glyphicon-bookmark"></span> VM</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class=" col-lg-6">
+                            <a href="#" id="btn_export" class="btn btn-danger btn-lg"  role="button"><span class="glyphicon glyphicon-list-alt"></span> <br/>Export Dump</a>
+                            <a href="#" id="btn_import" class="btn btn-warning btn-lg" role="button"><span class="glyphicon glyphicon-bookmark"></span> <br/>Import Dump</a>
+                            <a href="#" id="btn_install" class="btn btn-primary btn-lg" role="button"><span class="glyphicon glyphicon-signal"></span> <br/>Install Solife</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div id="form_database" style="display: none;" >
+        <div class="form-group">
+            <label>
+                Username
+            </label>
+            <input type="text" class="form-control" id="username_exp" name="username_exp">
+        </div>
+        <div class="form-group">
+            <label>
+               Password
+            </label>
+            <input type="text" class="form-control" id="password_exp" name="password_exp">
+        </div>
+        <div class="form-group">
+            <label>
+                DataBase
+            </label>
+            <input type="text" class="form-control" id="data_base_exp" name="data_base_exp">
+        </div>
+            <div class="col-md-4 column ui-sortable">
+                <div class="form-group">
+                    <label>
+                        Schemas
+                    </label>
+                    <input type="text" class="form-control" id="schema_exp" name="schema_exp">
+                </div>
+            </div>
+            <div class="col-md-4 column ui-sortable">
+                <div class="form-group">
+                    <label>
+                        Dumpfile name
+                    </label>
+                    <input type="text" class="form-control" id="dumpfile_name_exp" name="dumpfile_name_exp">
+                </div>
+            </div>
+            <div class="col-md-4 column ui-sortable">
+                <div class="form-group">
+                    <label>
+                        Log file name
+                    </label>
+                    <input type="text" class="form-control" id="logfile_name" name="logfile_name">
+                </div>
+            </div>
+            <br>
+
+            <button type="button" class="btn btn-primary" id="btn_sub_exp">
+                Submit
+            </button>
+
+    </div>
+
+</div>
+    </div>
+
+    <div class="row">
+        <div id="form_database_export" style="display: none;" >
+            <div class="form-group">
+                <label>
+                    Username
+                </label>
+                <input type="text" class="form-control" id="username_imp" name="username_imp">
+            </div>
+            <div class="form-group">
+                <label>
+                    Password
+                </label>
+                <input type="text" class="form-control" id="password_imp" name="password_imp">
+            </div>
+            <div class="form-group">
+                <label>
+                    DataBase
+                </label>
+                <input type="text" class="form-control" id="data_base_imp" name="data_base_imp">
+            </div>
+            <div class="col-md-6 column ui-sortable">
+                <div class="form-group">
+                    <label>
+                        Schema
+                    </label>
+                    <input type="text" class="form-control" id="schema_imp" name="schema_imp">
+                </div>
+            </div>
+            <div class="col-md-6 column ui-sortable">
+                <div class="form-group">
+                    <label>
+                        Dumpfile
+                    </label>
+                    <input type="text" class="form-control" id="dumpfile_name_imp" name="dumpfile_name_imp">
+                </div>
+            </div>
+
+
+            <div class="col-md-6 column ui-sortable">
+                <div class="form-group">
+                    <label>
+                        RemaptableSpace source_tablespace
+                    </label>
+                    <input type="text" class="form-control" id="remap_name_imp" name="username">
+                </div>
+            </div>
+            <div class="col-md-6 column ui-sortable">
+                <div class="form-group">
+                    <label>
+                        RemaptableSpace target_tablespace
+                    </label>
+                    <input type="text" class="form-control" id="remap_name2_imp" name="username">
+                </div>
+            </div>
+            <br>
+
+            <button type="button" class="btn btn-primary" id="btn_sub_imp">
+                Submit
+            </button>
+
+        </div>
+
+    </div>
+    </div>
+    <div class="row">
+        <div id="form_database_install" style="display: none;" >
+            <div class="form-group">
+                <label>
+                    Path
+                </label>
+                <input type="text" class="form-control" id="user_name" name="username">
+            </div>
+            <div class="form-group">
+                <label>
+                    XML FILE
+                </label>
+                <textarea class="form-control" id="text-xml" > </textarea>
+            </div>
+            <div class="form-group">
+                <label>
+                    Token File
+                </label>
+                <textarea class="form-control" id="text-xml" > </textarea>
+            </div>
+            <button type="button" class="btn btn-primary" id="btn_sub_install">
+                Submit
+            </button>
+
+        </div>
+
+    </div>
+    </div>
+</main>
+
+
+<footer>
+    <% include ../partials/footer %>
+</footer>
+
+</body>
+</html>
